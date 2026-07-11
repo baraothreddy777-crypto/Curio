@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Curio | AI News Reporter</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Libre+Caslon+Text:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Libre Caslon Text', serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #474746;
+            border-radius: 10px;
+        }
+
+        /* Motion System */
+        @keyframes fade-slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes golden-shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .animate-entrance {
+            opacity: 0;
+            animation: fade-slide-up 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #d4af37 0%, #ffe088 50%, #d4af37 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: golden-shimmer 6s linear infinite;
+        }
+
+        .shimmer-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-button::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: golden-shimmer 4s infinite;
+        }
+
+        .glow-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glow-hover:hover, .glow-hover:active {
+            transform: scale(1.01);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.6);
+        }
+
+        .tap-active:active {
+            transform: scale(0.96);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-entrance, .shimmer-text, .shimmer-button::after {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .glow-hover:hover, .tap-active:active {
+                transform: none !important;
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#313030",
+                        "on-primary": "#3c2f00",
+                        "on-secondary-fixed-variant": "#474746",
+                        "on-primary-fixed-variant": "#574500",
+                        "tertiary-container": "#b4b2b2",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary": "#d0cdcd",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "surface-container-low": "#1c1b1b",
+                        "outline-variant": "#4d4635",
+                        "outline": "#99907c",
+                        "surface-container-highest": "#353534",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "surface": "#131313",
+                        "inverse-on-surface": "#313030",
+                        "on-error": "#690005",
+                        "surface-variant": "#353534",
+                        "tertiary-fixed": "#e4e2e1",
+                        "primary": "#d4af37",
+                        "inverse-primary": "#735c00",
+                        "error-container": "#93000a",
+                        "primary-container": "#d4af37",
+                        "surface-bright": "#3a3939",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-primary-container": "#3c2f00",
+                        "on-surface-variant": "#d0c5af",
+                        "primary-fixed-dim": "#e9c349",
+                        "secondary": "#c8c6c5",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container": "#201f1f",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "surface-tint": "#e9c349",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#303030",
+                        "on-background": "#e5e2e1",
+                        "on-secondary-container": "#b7b5b4",
+                        "on-primary-fixed": "#241a00",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "surface-dim": "#131313",
+                        "on-tertiary-container": "#454545",
+                        "primary-fixed": "#ffe088",
+                        "secondary-container": "#474746",
+                        "secondary-fixed": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0rem",
+                        "lg": "0.125rem",
+                        "xl": "0.25rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "1rem",
+                        "unit": "4px",
+                        "container-padding": "1.5rem",
+                        "stack-sm": "0.5rem",
+                        "stack-md": "1rem",
+                        "stack-lg": "2rem",
+                        "section-gap": "2rem",
+                        "margin-mobile": "1.25rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "headline-lg": ["Libre Caslon Text"],
+                        "display-lg": ["Libre Caslon Text"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "headline-md": ["22px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "headline-lg": ["28px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["42px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "label-sm": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            min-height: 100dvh;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary/30 selection:text-primary">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant flex items-center justify-between px-margin-mobile h-14">
+<div class="flex items-center gap-stack-md cursor-pointer tap-active transition-transform">
+<span class="material-symbols-outlined text-primary">menu</span>
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Curio</span>
+</div>
+<button class="flex items-center justify-center w-8 h-8 rounded-full hover:bg-surface-container-high transition-colors tap-active" id="refreshBtn">
+<span class="material-symbols-outlined text-primary transition-transform duration-700">refresh</span>
+</button>
+</header>
+<main class="max-w-screen-xl mx-auto px-margin-mobile pt-stack-md pb-32">
+<!-- Hero Section: Your Daily Summary -->
+<section class="mb-section-gap animate-entrance" style="animation-delay: 0.1s;">
+<div class="bg-surface-container-low border border-outline-variant p-stack-md shadow-sm glow-hover">
+<div class="flex items-center gap-stack-sm mb-stack-sm">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h2 class="font-headline-md text-headline-md text-primary shimmer-text">Your Daily Summary</h2>
+</div>
+<div class="space-y-stack-sm text-on-surface font-body-lg text-body-lg">
+    {{ news | safe }}
+</div>
+<div class="mt-stack-md flex gap-stack-md">
+<button class="bg-primary text-on-primary px-stack-md py-1.5 rounded-sm font-label-md text-[13px] font-bold hover:brightness-110 tap-active transition-all shimmer-button">
+                    Deep Dive
+                </button>
+<button class="border border-primary/50 text-primary px-stack-md py-1.5 rounded-sm font-label-md text-[13px] font-bold hover:bg-surface-variant tap-active transition-all">
+                    Listen to Briefing
+                </button>
+</div>
+</div>
+</section>
+<!-- Key Developments Section -->
+<section>
+<div class="flex items-center justify-between mb-stack-sm animate-entrance" style="animation-delay: 0.3s;">
+<h3 class="font-headline-md text-headline-md text-primary">Key Developments</h3>
+<span class="text-primary font-label-sm text-label-sm cursor-pointer hover:underline uppercase tracking-widest transition-all">View All</span>
+</div>
+<div class="grid grid-cols-1 gap-stack-md">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant overflow-hidden glow-hover group cursor-pointer flex animate-entrance" style="animation-delay: 0.4s;">
+<div class="w-1/3 bg-surface-container-highest overflow-hidden shrink-0">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCtemevd1Q58c5FqRukDm5tqVSsEIhZeiPDuJ-pGdwRbIL5MycnitfzYcA6r5kqd4XU1qYZPc6TxNYdB53KLWBiUDbxb-bJAqUDWdX0t1d_xwFDsxmMbbCeYugBoQf_BELw43_qtEijcmClhIlZYdOVnwxkk4JSxMI1nig3lqOwNglvSeI-HlEfa05hevBIViYXS94K6ZMKjYZw9UzwiM-86Loy7EoP5pPd2ARsFKx8EgrGILvh5Ex1')"></div>
+</div>
+<div class="p-stack-sm flex-1">
+<span class="inline-block text-primary font-label-sm text-[10px] uppercase tracking-tighter mb-1">Tech</span>
+<h4 class="font-headline-md text-[18px] text-on-surface mb-1 leading-[1.2]">Quantum Computing Reaches Stability</h4>
+<p class="text-on-surface-variant font-body-md text-body-md line-clamp-2 leading-[1.3]">New error-correction protocols have extended qubit coherence time by orders of magnitude.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant overflow-hidden glow-hover group cursor-pointer flex animate-entrance" style="animation-delay: 0.5s;">
+<div class="w-1/3 bg-surface-container-highest overflow-hidden shrink-0">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB9q54anpimCFsDnIbyMAh_OoIV2JuPrLrkyMHueI2S_PzVzpicDTFwwbzPxf3xxnI_Dp57yVI3K8Ho4rp_o47gGf5mOvCNI7hjPgfiDvDaqREzaVq2Vi8UwBSOwbmPT46k_zx5UZdpXnZ9fdgwjW8gWQCCE_y9Rs2lJ6DVJFB7x7IZrnI1cCq7IyBsplysq3opRCnqJKPzeyXj9yd740kqXiwXluLSY_eDwanH1Q2ZaHbyOa77cWIF')"></div>
+</div>
+<div class="p-stack-sm flex-1">
+<span class="inline-block text-primary font-label-sm text-[10px] uppercase tracking-tighter mb-1">Finance</span>
+<h4 class="font-headline-md text-[18px] text-on-surface mb-1 leading-[1.2]">Market Indices Surge Mid-Day</h4>
+<p class="text-on-surface-variant font-body-md text-body-md line-clamp-2 leading-[1.3]">Investors welcome the latest central bank announcements leading to a rally in growth sectors.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant overflow-hidden glow-hover group cursor-pointer flex animate-entrance" style="animation-delay: 0.6s;">
+<div class="w-1/3 bg-surface-container-highest overflow-hidden shrink-0">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCYygfQ3y0pgB1sdFFxf-Mxa41bAXUFf3qGYh8UjUh9wdp43vI7aT5f3o5gEDbTYVRNhOUUrwrsnNp9xRnx4s1JgtDRKy_nWckGmcnovl0QOj1ZePpu6__JVCqkj-rCNP_3Lnab3cxyrOCDQz3b_yXz195CtPzKzTIdeMhBrPSRLLjBrgerzZHMRABB63jhEvuMOIYTgN2eFTIdlwp8epUYKxiUaaAkgbe8ugyvifMipCWBU-su2AbC')"></div>
+</div>
+<div class="p-stack-sm flex-1">
+<span class="inline-block text-primary font-label-sm text-[10px] uppercase tracking-tighter mb-1">Global</span>
+<h4 class="font-headline-md text-[18px] text-on-surface mb-1 leading-[1.2]">Renewable Exports Hit Record</h4>
+<p class="text-on-surface-variant font-body-md text-body-md line-clamp-2 leading-[1.3]">Nations reporting unprecedented growth in power grid interconnectedness and solar transfer.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center py-2 bg-surface-container-high border-t border-outline-variant shadow-2xl">
+<a class="flex flex-col items-center justify-center text-primary font-bold transition-all duration-300 tap-active" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-[10px] uppercase tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all duration-300 tap-active" href="#">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+<span class="font-label-sm text-[10px] uppercase tracking-tighter">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all duration-300 tap-active" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-label-sm text-[10px] uppercase tracking-tighter">Settings</span>
+</a>
+</nav>
+<!-- Floating Action Button -->
+<button class="fixed right-6 bottom-20 bg-primary text-on-primary w-12 h-12 rounded-sm shadow-xl flex items-center justify-center tap-active transition-transform hover:brightness-110 z-40 shimmer-button">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+<script>
+    // Micro-interactions
+    const refreshBtn = document.getElementById('refreshBtn');
+    refreshBtn.addEventListener('click', () => {
+        const icon = refreshBtn.querySelector('span');
+        icon.style.transform = 'rotate(360deg)';
+        setTimeout(() => {
+            icon.style.transition = 'none';
+            icon.style.transform = 'rotate(0deg)';
+            setTimeout(() => {
+                icon.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+            }, 50);
+        }, 700);
+    });
+
+    // Intersection Observer for scroll-into-view animations if content was longer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-entrance');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-entrance').forEach(el => observer.observe(el));
+</script>
+</body></html>
