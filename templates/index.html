@@ -98,6 +98,60 @@
             transform: scale(0.96);
         }
 
+        /* Markdown rendering styles */
+        #summary-container h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-top: 1.25em;
+            margin-bottom: 0.5em;
+            color: #d4af37; /* primary gold color */
+            font-family: 'Libre Caslon Text', serif;
+        }
+        #summary-container h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-top: 1.25em;
+            margin-bottom: 0.5em;
+            color: #d4af37;
+            font-family: 'Libre Caslon Text', serif;
+        }
+        #summary-container h3 {
+            font-size: 1.25em;
+            font-weight: 600;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            color: #d4af37;
+            font-family: 'Libre Caslon Text', serif;
+        }
+        #summary-container p {
+            margin-top: 0.75em;
+            margin-bottom: 0.75em;
+            line-height: 1.6;
+        }
+        #summary-container ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            margin-top: 0.75em;
+            margin-bottom: 0.75em;
+        }
+        #summary-container ol {
+            list-style-type: decimal;
+            padding-left: 1.5em;
+            margin-top: 0.75em;
+            margin-bottom: 0.75em;
+        }
+        #summary-container li {
+            margin-top: 0.25em;
+            margin-bottom: 0.25em;
+        }
+        #summary-container strong {
+            font-weight: 700;
+            color: #ffe088; /* lighter gold/yellow */
+        }
+        #summary-container em {
+            font-style: italic;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .animate-entrance, .shimmer-text, .shimmer-button::after {
                 animation: none !important;
@@ -224,9 +278,10 @@
 <span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
 <h2 class="font-headline-md text-headline-md text-primary shimmer-text">Your Daily Summary</h2>
 </div>
-<div class="space-y-stack-sm text-on-surface font-body-lg text-body-lg">
-    {{ news | safe }}
+<div id="summary-container" class="space-y-stack-sm text-on-surface font-body-lg text-body-lg">
+    <!-- Rendered Markdown will be injected here -->
 </div>
+<div id="raw-markdown" style="display: none;">{{ news }}</div>
 <div class="mt-stack-md flex gap-stack-md">
 <button class="bg-primary text-on-primary px-stack-md py-1.5 rounded-sm font-label-md text-[13px] font-bold hover:brightness-110 tap-active transition-all shimmer-button">
                     Deep Dive
@@ -299,7 +354,12 @@
 <button class="fixed right-6 bottom-20 bg-primary text-on-primary w-12 h-12 rounded-sm shadow-xl flex items-center justify-center tap-active transition-transform hover:brightness-110 z-40 shimmer-button">
 <span class="material-symbols-outlined">edit_square</span>
 </button>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+    // Parse and render Markdown to HTML using marked.js
+    const rawMarkdown = document.getElementById('raw-markdown').textContent;
+    document.getElementById('summary-container').innerHTML = marked.parse(rawMarkdown);
+
     // Micro-interactions
     const refreshBtn = document.getElementById('refreshBtn');
     refreshBtn.addEventListener('click', () => {
