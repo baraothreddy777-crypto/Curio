@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+langgraph
+langchain
+langchain-google-genai
+google-genai
+python-dotenv
+feedparser
+flask
