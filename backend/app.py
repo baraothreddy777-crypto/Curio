@@ -32,10 +32,11 @@ Here is the news data to summarize:
 {news}
 """
 
-print("\n" + "="*50)
-print("YOUR PERSONALIZED NEWS BRIEF")
-print("="*50 + "\n")
+if __name__ == "__main__":
+    print("\n" + "="*50)
+    print("YOUR PERSONALIZED NEWS BRIEF")
+    print("="*50 + "\n")
 
-print(ask_gemini(prompt))
+    print(ask_gemini(prompt))
 
-print("\n" + "="*50)
+    print("\n" + "="*50)
